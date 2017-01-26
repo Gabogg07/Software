@@ -124,13 +124,15 @@ def calcularPrecio(Tarifa,tiempoDeServicio):
 Anoe=2017
 Mese=5
 Diae=17
+
 InicioDeServicio=datetime.datetime(Anoe,Mese,Diae,8,0,0,0)
-FinDeServicio=datetime.datetime(Anoe,Mese,Diae+6,21,0,0,0)
+FinDeServicio=datetime.datetime(Anoe,Mese,Diae+7,8,0,0,0)
 
 # TarifaSem y TarifaFin son dos tuplas, en su primera posicion tiene los bolivares y en la segunda los centimos
-TarifaSem=[2,5]
+
+TarifaSem=[2,6]
 vSem=TarifaSem[0]+(TarifaSem[1]/100)
-TarifaFin=[5,0]
+TarifaFin=[0,0]
 vFin=TarifaFin[0]+(TarifaFin[1]/100)
 
 #Cuerpo del codigo
@@ -140,9 +142,9 @@ print((FinDeServicio-InicioDeServicio))
 
 if((FinDeServicio-InicioDeServicio).seconds<900 and (FinDeServicio-InicioDeServicio).days==0):
     print("El tiempo de servicio debe ser al menos 15 minutos")
-elif((FinDeServicio-InicioDeServicio).days>7):
+elif((FinDeServicio-InicioDeServicio).days>7 or ((FinDeServicio-InicioDeServicio).days==7 and(FinDeServicio-InicioDeServicio).microseconds!=0)):
     print("El tiempo de servicio no puede ser mayor que 7 dias")
 else:
     pago=calcularPrecio(Tarifa, tiempoDeServicio)
     bolivares,centimos=divmod(pago, 1)
-    print("Se deben: ",bolivares," bolivares con: ",centimos*100, "centimos")
+    print("Se deben: ",int(bolivares//1)," bolivares con: ",int(round(centimos*100,2)), "centimos")
